@@ -1,0 +1,6 @@
+#!/system/bin/sh
+#
+. /system/etc/init.d.cfg
+if $sqlite3; then
+	/system/xbin/sqlite3 /data/data/com.google.android.gsf/databases/gservices.db "UPDATE main SET value = 300000 WHERE name LIKE 'gtalk_%heartbeat_ping_interval_ms';"; 
+fi
