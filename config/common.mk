@@ -12,17 +12,36 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html \
     ro.com.android.wifi-watchlist=GoogleGuest \
     ro.setupwizard.enterprise_mode=1 \
-    ro.com.android.dateformat=MM-dd-yyyy \
+    ro.com.android.dateformat=dd-MM-yyyy \
     ro.com.android.dataroaming=false \
     ro.build.selinux=1 
 
 # Thank you, please drive thru!
-PRODUCT_PROPERTY_OVERRIDES += persist.sys.dun.override=0
-
-ifneq ($(TARGET_BUILD_VARIANT),eng)
-# Enable ADB authentication
-ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=1
-endif
+PRODUCT_PROPERTY_OVERRIDES += persist.sys.dun.override=0 \
+    service.adb.root=1 \
+    persist.service.adb.enable = 1 \
+    ro.secure=0 \
+    ro.adb.secure=0 \
+    persist.adb.notify=0 \
+    pm.sleep_mode=1 \
+    windowsmgr.max_events_per_sec=300 \
+    ro.ril.enable.3g.prefix=1 \
+    ro.ril.hep=1 \
+    ro.ril.hsxpa=3 \
+    ro.ril.enable.dtm=1 \
+    ro.ril.gprsclass=12 \
+    ro.ril.hsdpa.category=8 \
+    ro.ril.enable.a53=1 \
+    ro.ril.hsupa.category=5 \
+    net.tcp.buffersize.default=4096,87380,256960,4096,16384,256960 \
+    net.tcp.buffersize.wifi=4096,87380,256960,4096,16384,256960 \
+    net.tcp.buffersize.umts=4096,87380,256960,4096,16384,256960 \
+    net.tcp.buffersize.gprs=4096,87380,256960,4096,16384,256960 \
+    net.tcp.buffersize.edge=4096,87380,256960,4096,16384,256960 \
+    debug.sf.hw=1 \
+    ro.debuggable=1 \
+    persist.sys.usb.config=mtp,adb \
+    persist.sys.timezone=Europe/Rome
 
 # Backup Tool
 ifneq ($(WITH_GMS),true)
@@ -35,7 +54,8 @@ endif
 # init.d support
 PRODUCT_COPY_FILES += \
     vendor/eos/prebuilt/common/etc/init.d/00banner:system/etc/init.d/00banner \
-    vendor/eos/prebuilt/common/bin/sysinit:system/bin/sysinit
+    vendor/eos/prebuilt/common/bin/sysinit:system/bin/sysinit \
+    vendor/eos/prebuilt/common/etc/init.d/97gcmservice:system/etc/init.d/97gcmservice
 
 # userinit support
 PRODUCT_COPY_FILES += \
@@ -61,14 +81,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     AudioFX \
     BluetoothExt \
-    CMSettingsProvider \
-    CustomWallpapers \
     Development \
-    Eleven \
     LockClock \
-    OTACenter \
     Profiles \
-    Trebuchet
+    Trebuchet \
+    Viper4Android \
+    KernelAdiutor
 
 # Extra tools
 PRODUCT_PACKAGES += \
@@ -110,8 +128,12 @@ PRODUCT_PACKAGES += \
     ScreenRecorder \
     libscreenrecorder
 
+# copy gapps
+PRODUCT_COPY_FILES += \
+	$(call find-copy-subdir-files,*,vendor/eos/prebuilt/common/gapps,system)
+
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.root_access=0
+    persist.sys.root_access=3
 
 # CM Platform Library
 PRODUCT_PACKAGES += \
