@@ -71,7 +71,7 @@ PRODUCT_COPY_FILES += \
 
 # Copy over added mimetype supported in libcore.net.MimeUtils
 PRODUCT_COPY_FILES += \
-    vendor/cm/prebuilt/common/lib/content-types.properties:system/lib/content-types.properties
+    vendor/eos/prebuilt/common/lib/content-types.properties:system/lib/content-types.properties
 
 # Enable SIP+VoIP on all targets
 PRODUCT_COPY_FILES += \
@@ -85,8 +85,7 @@ PRODUCT_PACKAGES += \
     LockClock \
     Profiles \
     Trebuchet \
-    Viper4Android \
-    KernelAdiutor
+    Viper4Android
 
 # Extra tools
 PRODUCT_PACKAGES += \
